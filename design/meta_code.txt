@@ -1,0 +1,49 @@
+# This is meta code
+# These commands and tools are not implemented
+# This code purpouse is to design flowutlis
+
+flow_info -flow /projects/riscv/flow/fusion.flow -steps
+flow_info -flow /projects/riscv/flow/fusion.flow -config
+flow_info -flow /projects/riscv/flow/fusion.flow -default_config
+
+flow_check -flow /projects/riscv/flow/fusion.flow
+flow_check -flow /projects/riscv/flow/fusion.flow -flow_config /projects/riscv/flow/core/ver5.config 
+
+flow_generate -flat_config -flow /projects/riscv/flow/fusion.flow -flow_config /projects/riscv/flow/core/ver5.config
+flow_generate -scripts     -flow /projects/riscv/flow/fusion.flow -flow_config /projects/riscv/flow/core/ver5.config -from setup -to compile -out_dir /projects/riscv/runs/core/ver5/scripts
+flow_generate -schedule    -flow /projects/riscv/flow/fusion.flow -flow_config /projects/riscv/flow/core/ver5.config -from setup -to compile -out_dir /projects/riscv/runs/core/ver5/scripts
+
+# How to store and process scheduling information?
+
+# Flow config description section goes into .flow file
+var report_dir        comment="report dir"              require=mandatory default=""       check="create"
+var lef_files         comment="list of lef files"       require=mandatory default=""       check="file_crc32"
+var lib_files         comment="list of lib files"       require=mandatory default=""       check="file_crc32"
+var floorplan         comment="floorplan"               require=optional  default=""       check="file_crc32"
+var extraction_effort comment="extraction effort level" require=optional  default="medium" check="value_list={low medium high}"
+var syn.scenarios     comment="synthesis scenarios:     require=mandatory default=""       check="set"
+
+# Flow config file
+set lef_files { <lef_files_list> }
+set lib_files { <lib_files_list> }
+set extraction_effort high
+
+# Hierarchy of the configuration
+# File ver5.config
+inclule /project/riscv/flow/project.config
+inclule /project/riscv/flow/core/block.config
+set ...
+
+# Generated code
+set_db extraction_effort_level high #fusion.flow:45, fusion.config:4
+
+
+# Each flow step
+set provides [list]
+	lappend provides $out_dir/a
+	lappend provides $out_dir/b
+	lappend provides $out_dir/cts.db
+
+set requires [list]
+	lappend requires /path/to/file/aaa
+	lappend requires $out_dir/place.db
