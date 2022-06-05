@@ -35,6 +35,7 @@ inclule /project/riscv/flow/core/block.config
 set ...
 
 # Generated code
+# In the flat script it would be great to have reference on the source of the variable
 set_db extraction_effort_level high #fusion.flow:45, fusion.config:4
 
 

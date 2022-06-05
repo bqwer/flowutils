@@ -1,0 +1,23 @@
+The flow parts:
+
+Configure
+Run
+Control
+
+Debug is crucial task
+
+yamllint -- check syntax, indents, etc. in yaml files
+yq -- lightweight command line yaml processor (incl. merge)
+
+
+handoff and autopopulation...
+in most cases it's mistake to invent own syntax
+
+
+we have:
+ 1. YAML _description_ of settings
+ 2. YAML _configuration_ of the project/block/etc. --- we should check against description
+ 3. YAML _description_ of the flow steps
+ 4. TCL description on how to generate flat scripts --- we should probably check against flow steps desctiption
+
+somehow it's needed to combine population of the tool specific screepts and scheduler to run this scripts

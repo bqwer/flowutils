@@ -1,0 +1,63 @@
+# YAML files can be merged
+# using production ready external tools
+
+--- #take on step definition
+tool: innovus
+step: place
+
+reqires:
+  - lef
+  - [fp_def, fp]
+  - lib
+  - run_dir
+  - report_dir
+  - out_dir
+
+provides:
+  place.db
+
+variables: #will be put under corresponding namespace
+  power_effort:
+    reqired:    Yes
+    check_type: is_set
+    default:
+    value_list: [low, medium, high]
+
+body: |
+  namespace import ::flowutils::innovus::place
+  this is tcl text
+  with commands you need
+  that can use variables
+  for example $power_effort
+
+--- #configuration setup
+variables:
+    lef:
+      required: Yes
+      check_type: crc32
+
+    lib:
+      required: Yes
+      check_type: crc32
+
+--- #configuration
+
+lib:
+  /path/ss.lib
+  /path/ff.lib
+  /path/tt.lib
+
+lef:
+  /path/ss.lef
+  /path/ff.lef
+  /path/tt.lef
+
+report_dir: /path/to/report/dir
+
+--- #configuration block
+
+lib:
+  /path/blk/macro.lib
+  /path/blk/mem.lib
+
+
