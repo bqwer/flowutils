@@ -1,20 +1,21 @@
 #produce flow from steps + configuration
 [flow::init]
 
-[flow::read_steps /path/to/fusion.yml     ]
-[flow::read_steps /path/to/prime_time.yml ]
+[flow::read_settings /path/to/proj_settings.yml ]
+[flow::read_steps    /path/to/innovus_steps.yml ]
 
-[flow::read_cfg   /path/to/project.cfg    ]
-[flow::update_cfg /path/to/block.cfg      ]
+[flow::read_cfg   /path/to/project.config ]
+[flow::update_cfg /path/to/block.config   ]
 
 [flow::check]
+# [flow::check_step]
 
 # this is like yaml merging
 [flow::script::start $flow::config::script_dir/fusion_clock.tcl]
-set flow::fusion::load_db::database /path/to/placed/database
-[flow::script::paste_step fusion.init]
-[flow::script::paste_step fusion.load_db]
-[flow::script::add_tcl "
+[flow::script::paste_step innovus.init]
+set flow::setps::innovus.load_db::database /path/to/placed/database
+[flow::script::paste_step innovus.load_db]
+[flow::script::add_plain "
   some\
   tcl\
   goes\
@@ -31,28 +32,3 @@ foreach view $flow::general::views {
   [flow::script::write]
 }
 
-#---
-#flow:
-#  task: floorplan
-#    depends: none 
-#    tool: /path/to/fc
-#    script: /path/to/script/fp.tcl
-#    run_cmd: "$tool -script $script"
-#    resource_cmd: "qsub ..."
-#
-#  task: place
-#    depends: floorplan
-#    tool: /path/to/fc
-#    script: /path/to/script/place.tcl
-#    run_cmd: "$tool -script $script"
-#    resource_cmd: "qsub ..."
-#
-#  task: qrc
-#    depends: route
-#    tool: /path/to/qrc
-#    script: 
-#
-#  task: sta
-#    depends: [qrc, write_def]
-#    tool: /path/to/primetime
-#    script:

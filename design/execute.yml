@@ -1,0 +1,26 @@
+#---
+#flow:
+#  task: floorplan
+#    depends: none
+#    tool: /path/to/fc
+#    script: /path/to/script/fp.tcl
+#    run_cmd: "$tool -script $script"
+#    resource_cmd: "qsub ..."
+#
+#  task: place
+#    depends: floorplan
+#    tool: /path/to/fc
+#    script: /path/to/script/place.tcl
+#    run_cmd: "$tool -script $script"
+#    resource_cmd: "qsub ..."
+#
+#  task: qrc
+#    depends: route
+#    tool: /path/to/qrc
+#    script:
+#
+#  task: sta
+#    depends: [qrc, write_def]
+#    tool: /path/to/primetime
+#    script:
+#...

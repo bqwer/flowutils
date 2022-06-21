@@ -22,8 +22,14 @@ Debug is crucial task
 yamllint -- check syntax, indents, etc. in yaml files  
 yq -- lightweight command line yaml processor (incl. merge)  
 
-somehow it's needed to combine population of the tool specific screepts and scheduler to run this scripts  
+somehow it's needed to combine population of the tool specific scripts and scheduler to run this scripts  
 
-How do you specify the flow?  
-Steps -> Scripts -> Runs  
+## Pipelining the flow
+The main idea to give everything you _need_ to pipeline the flow.
+But pipelining itself should be done manually withing particular implementation.
+
+## How do you specify the flow?  
+- Describe Steps
+- Generate Scripts
+- Organize Runs
 
