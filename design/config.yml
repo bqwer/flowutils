@@ -1,0 +1,150 @@
+--- # MMMC/MCMM configuration
+mmmc:
+  lib:
+    slow: &slow_lib
+      comment: "Slow process libs"
+      check_type: file_sha
+      value:
+        - /path/to/lib_ss1
+        - /path/to/lib_ss2
+        - /path/to/lib_ss3
+
+    fast: &fast_lib
+      comment: "Fast process libs"
+      check_type: file_sha
+      value:
+        - /path/to/lib_ff1
+        - /path/to/lib_ff2
+        - /path/to/lib_ff3
+
+  sdc:
+    func: &func_sdc
+      comment: "func mode SDC"
+      check_type: file_sha
+      value:
+      - /path/to/func_sdc1
+      - /path/to/func_sdc2
+      - /path/to/func_sdc3
+
+    scan: &scan_sdc
+      comment: "scan mode SDC"
+      check_type: file_sha
+      value:
+      - /path/to/scan_sdc1
+      - /path/to/scan_sdc2
+      - /path/to/scan_sdc3
+
+  cond: #conditions goes here
+    fast: &fast_cond
+      comment: "fast condition"
+      check_type: is_set
+      value: "ff_cond"
+
+    slow: &slow_cond
+      comment: "slow condition"
+      check_type: is_set
+      value: "ss_cond"
+
+  views:
+    comment: "View list"
+    check_type: is_set
+    value:
+      - name: func_ss
+        type: [setup, power]
+        cond: *slow_cond
+        lib:  *slow_lib
+        sdc:  *func_sdc
+
+      - name: func_ff
+        type: hold
+        cond: *fast_cond
+        lib:  *fast_lib
+        sdc:  *func_sdc
+
+      - name: scan_ss
+        type: setup
+        cond: *slow_cond
+        lib:  *slow_lib
+        sdc:  *scan_sdc
+
+      - name: scan_ff
+        type: hold
+        cond: *fast_cond
+        lib:  *fast_lib
+        sdc:  *scan_sdc
+...
+
+--- # project specific configuration
+project:
+  lib:
+    comment: "LIB files"
+    check_type: file_sha
+    value:
+      - /path/to/lib1
+      - /path/to/lib2
+
+  lef:
+    comment: "LEF files"
+    check_type: file_sha
+    value:
+      - /path/to/lef1
+      - /path/to/lef2
+
+block:
+  lib:
+    comment: "Block specific LIB files"
+    check_type: file_sha
+    value:
+      - /path/to/block/lib1
+      - /path/to/block/lib2
+
+  lef:
+    comment: "Block specific LEF files"
+    check_type: file_sha
+    value:
+      - /path/to/block/lef1
+      - /path/to/block/lef2
+
+  spef:
+    comment: "SPEF files"
+    check_type: file_sha
+    value: none
+
+  fp:
+    comment: "Floorplan files"
+    check_type: file_sha
+    value: none
+
+  fp_def:
+    comment: "Floorplan files"
+    check_type: file_sha
+    value: none
+...
+
+--- # tool specific configuration
+innovus:
+  tool_path:
+    comment: "Innovus tool path"
+    check_type: is_set
+    value: /path/to/innovus/bin
+
+  tool_version:
+    comment: "Innovus version"
+    check_type: is_set
+    value: 2022
+
+  run_dir:
+    comment: "Run directory"
+    check_type: is_set
+    value: none
+
+  report_dir:
+    description: "Report directory path"
+    check_type: is_set
+    value: none
+
+  out_dir:
+    description: "Output directory path"
+    check_type: is_set
+    value: none
+...

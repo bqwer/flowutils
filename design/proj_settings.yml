@@ -1,8 +1,0 @@
---- #Project configuration description
-lef:
-  required: true
-  check_type: file_crc32
-
-lib:
-  required: true
-  check_type: file_crc32

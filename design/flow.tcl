@@ -1,5 +1,7 @@
-#produce flow from steps + configuration
+# produce flow from steps + configuration
+# flow::init should introduce flow requirements on the configuration
 [flow::init]
+
 
 [flow::read_settings /path/to/proj_settings.yml ]
 [flow::read_steps    /path/to/innovus_steps.yml ]
@@ -9,6 +11,7 @@
 
 [flow::check]
 # [flow::check_step]
+#
 
 # this is like yaml merging
 [flow::script::start $flow::config::script_dir/fusion_clock.tcl]

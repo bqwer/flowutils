@@ -2,36 +2,42 @@
 # using production ready external tools
 
 ---  # take on step definition
-tool: innovus
-tool_version: 2022
-step: place
+tool_name: innovus
+step_name: place
 
 reqires:  # requires this variables to be described and defined
-  - [fp_def, fp]
+  - either: [fp_def, fp]
   - lef
-  - lib
   - run_dir
   - report_dir
   - out_dir
-  - tool_path
+  - tool_version
+  - step_id
 
-optional:
-  - id
-  - power_effort
+  - if: mmmc
+    then: [setup_view_list, hold_view_list]
+    else: [slow_lib, fast_lib, sdc]
 
-defines:
-  - place_db
+provides:
+  out_db:
+    comment: "Placement Innovus Database"
+    check_type: exist
+    value: out_db
 
 variables:  # will be put under corresponding namespace flow::steps::innovus.place
   power_effort:
-    check_type: is_set
-    default: medium
-    value_list: [low, medium, high]
+    comment: "Placement power effort"
+    check_type: value_list [low, medium, high]
+    value: medium
 
 body: |
   namespace import flow::steps::innovus.place
   this is tcl text
   with commands you need
-  that can use variables
+  that can use defined variables
   for example $power_effort
 
+...
+#
+# set flow::config::lib [join flow::config::project::lib flow::config::block::lib]
+#
