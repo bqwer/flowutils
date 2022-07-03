@@ -45,31 +45,53 @@ mmmc:
       check_type: is_set
       value: "ss_cond"
 
+  rc_corner: #delay corner goes here
+    best:
+      comment:
+      check_type: is_set
+      value:
+
+    worst:
+      comment:
+      check_type: is_set
+      value: "ss_cond"
+
+  delay_corner: #delay corner goes here
+    ff_best:
+      comment:
+      check_type: is_set
+      value:
+
+    ss_worst:
+      comment:
+      check_type: is_set
+      value: "ss_cond"
+
   views:
     comment: "View list"
     check_type: is_set
     value:
       - name: func_ss
         type: [setup, power]
-        cond: *slow_cond
+        delay_corner: *ss_worst
         lib:  *slow_lib
         sdc:  *func_sdc
 
       - name: func_ff
         type: hold
-        cond: *fast_cond
+        delay_corner: *ff_best
         lib:  *fast_lib
         sdc:  *func_sdc
 
       - name: scan_ss
         type: setup
-        cond: *slow_cond
+        delay_corner: *ss_worst
         lib:  *slow_lib
         sdc:  *scan_sdc
 
       - name: scan_ff
         type: hold
-        cond: *fast_cond
+        delay_corner: *ff_best
         lib:  *fast_lib
         sdc:  *scan_sdc
 ...
@@ -141,7 +163,7 @@ innovus:
   report_dir:
     description: "Report directory path"
     check_type: is_set
-    value: none
+    value: ./reports
 
   out_dir:
     description: "Output directory path"

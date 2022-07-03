@@ -1,0 +1,47 @@
+--- # project specific configuration
+project:
+  libs:
+    slow: !flow_value
+      comment: "LIB files for SS"
+      check_type: file_sha
+      value:
+        - /path/to/lib_ss1
+        - /path/to/lib_ss2
+
+    fast: !flow_value
+      comment: "LIB files for FF"
+      check_type: file_sha
+      value:
+        - /path/to/lib_ff1
+        - /path/to/lib_ff2
+
+  lef: !flow_value
+    comment: "LEF files"
+    check_type: file_sha
+    value:
+      - /path/to/lef1
+      - /path/to/lef2
+
+block:
+  lib:
+    slow: !flow_value
+      comment: "Block specific LIB files SS"
+      check_type: file_sha
+      value:
+        - /path/to/block/lib1
+        - /path/to/block/lib2
+
+    slow: !flow_value
+      comment: "Block specific LIB files FF"
+      check_type: file_sha
+      value:
+        - /path/to/block/lib_ff1
+        - /path/to/block/lib_ff2
+
+  lef: !flow_value
+    comment: "Block specific LEF files"
+    check_type: file_sha
+    value:
+      - /path/to/block/lef1
+      - /path/to/block/lef2
+...

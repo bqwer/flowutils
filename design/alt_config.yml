@@ -1,0 +1,86 @@
+--- # MMMC/MCMM configuration
+mmmc:
+  lib:
+    slow: &slow_lib
+      - /path/to/lib_ss1
+      - /path/to/lib_ss2
+      - /path/to/lib_ss3
+
+    fast: &fast_lib
+      - /path/to/lib_ff1
+      - /path/to/lib_ff2
+      - /path/to/lib_ff3
+
+  sdc:
+    func: &func_sdc
+      - /path/to/func_sdc1
+      - /path/to/func_sdc2
+      - /path/to/func_sdc3
+
+    scan: &scan_sdc
+      - /path/to/scan_sdc1
+      - /path/to/scan_sdc2
+      - /path/to/scan_sdc3
+
+  cond: #conditions goes here
+    fast: &fast_cond "ff_cond"
+    slow: &slow_cond "ss_cond"
+
+  views:
+    - name: func_ss
+      type: [setup, power]
+      cond: *slow_cond
+      lib:  *slow_lib
+      sdc:  *func_sdc
+
+    - name: func_ff
+      type: hold
+      cond: *fast_cond
+      lib:  *fast_lib
+      sdc:  *func_sdc
+
+    - name: scan_ss
+      type: setup
+      cond: *slow_cond
+      lib:  *slow_lib
+      sdc:  *scan_sdc
+
+    - name: scan_ff
+      type: hold
+      cond: *fast_cond
+      lib:  *fast_lib
+      sdc:  *scan_sdc
+...
+
+--- # project specific configuration
+project:
+  lib:
+    - /path/to/lib1
+    - /path/to/lib2
+
+  lef:
+    - /path/to/lef1
+    - /path/to/lef2
+
+block:
+  lib:
+    - /path/to/block/lib1
+    - /path/to/block/lib2
+
+  lef:
+    - /path/to/block/lef1
+    - /path/to/block/lef2
+
+  spef:   none
+  fp:     none
+  fp_def: none
+...
+
+--- # tool specific configuration
+innovus:
+  set innovus::tool_path "/path/to/innovus/bin" #from /home/usr/config.yml@26
+  tool_version: 2022
+  run_dir:      none
+  report_dir:   none
+  out_dir:      none
+...

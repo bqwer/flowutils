@@ -1,0 +1,41 @@
+# YAML files can be merged
+# using production ready external tools
+
+reqires:  # requires this variables to be described and defined
+  - tool:         "== innovus"
+  - tool_version: ">= 22.0.1"
+  - either: [ fp_def, fp ]
+  - lef
+  - run_dir
+  - report_dir
+  - out_dir
+  - tool_version
+  - step_id
+
+  - if: mmmc
+    then: [setup_view_list, hold_view_list]
+    else: [slow_lib, fast_lib, sdc]
+
+provides:
+  out_db: !flow_value
+    comment: "Placement Innovus Database"
+    check_type: exist
+    value: out_db
+
+uses:  # will be put under corresponding namespace flow::steps::innovus.place
+  power_effort: !flow_value
+    comment: "Placement power effort"
+    check_type: value_list [low, medium, high]
+    value: medium
+
+body: |
+  namespace import flow::steps::innovus.place
+  this is tcl text
+  with commands you need
+  that can use defined variables
+  for example $power_effort
+
+...
+#
+# set flow::config::lib [join flow::config::project::lib flow::config::block::lib]
+#
